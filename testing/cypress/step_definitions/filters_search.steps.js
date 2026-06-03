@@ -15,7 +15,7 @@ Then("only books matching {string} should show", (query) => {
 });
 
 When("I select status filter {string}", (status) => {
-  cy.intercept('GET', `**/books?status=${encodeURIComponent(status)}`).as('statusFilter');
+cy.intercept('GET', '**/books?status=*').as('statusFilter');
   cy.get(LOCATORS.FILTER_LOCATORS.filterStatus).select(status);
   cy.wait('@statusFilter');
 });

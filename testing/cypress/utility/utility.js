@@ -7,6 +7,7 @@ export function loginUser() {
   cy.get(LOCATORS.LOGIN_LOCATORS.passwordInput).type(USER.password);
   cy.get(LOCATORS.LOGIN_LOCATORS.submitButton).click();
   cy.url().should("include", ROUTES.home);
+  cy.reload();
 }
 
 export function deleteAllBooks() {
