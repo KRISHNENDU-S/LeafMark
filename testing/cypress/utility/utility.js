@@ -12,8 +12,9 @@ export function loginUser() {
 export function deleteAllBooks() {
   cy.get('body').then($body => {
     if ($body.find('[data-testid^="delete-btn-"]').length > 0) {
+      const initialCount = $body.find('[data-testid^="delete-btn-"]').length;
       cy.get('[data-testid^="delete-btn-"]').first().click();
-      cy.wait(300);
+      cy.get('[data-testid^="delete-btn-"]').should('have.length', initialCount - 1);
       deleteAllBooks();
     }
   });
