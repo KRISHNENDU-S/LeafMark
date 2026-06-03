@@ -2,8 +2,7 @@ Feature: Add Book
 
   Background:
     Given I am logged in
-    And all books are cleared
-
+    
   Scenario: Add book with name author and reading status
     When I click add book
     And I enter book name and author for basic reading

@@ -7,10 +7,6 @@ Given("I am logged in", () => {
   loginUser();
 });
 
-Given("all books are cleared", () => {
-  deleteAllBooks();
-});
-
 When("I click add book", () => {
   cy.get(LOCATORS.BOOK_LOCATORS.addBookBtn).click();
 });
