@@ -12,11 +12,11 @@ export function loginUser() {
 
 export function deleteAllBooks() {
   cy.get('body').then($body => {
-    if ($body.find('[data-testid^="delete-btn-"]').length > 0) {
-      const initialCount = $body.find('[data-testid^="delete-btn-"]').length;
-      cy.get('[data-testid^="delete-btn-"]').first().click();
-      cy.get('[data-testid^="delete-btn-"]').should('have.length', initialCount - 1);
-      deleteAllBooks();
-    }
+    const count = $body.find('[data-testid^="delete-btn-"]').length;
+    if (count === 0) return;
+    
+    cy.get('[data-testid^="delete-btn-"]').first().click();
+    cy.get('[data-testid^="delete-btn-"]', { timeout: 5000 }).should('have.length.lessThan', count);
+    deleteAllBooks();
   });
 }

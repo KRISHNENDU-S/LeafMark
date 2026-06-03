@@ -19,11 +19,12 @@ cy.intercept('GET', '**/books?status=*').as('statusFilter');
   cy.get(LOCATORS.FILTER_LOCATORS.filterStatus).select(status);
   cy.wait('@statusFilter');
 });
+
 Then("only read books should show", () => {
-  cy.get(LOCATORS.TABLE_LOCATORS.bookTable).should("exist").within(() => {
-    cy.get('[data-testid^="status-"]').each($el => {
-      expect($el.text().toLowerCase()).to.eq("read");
-    });
+  cy.intercept('GET', '**/books?status=read').as('readFilter');
+  cy.get(LOCATORS.TABLE_LOCATORS.bookTable).should("exist");
+  cy.get('table[data-testid="book-table"] tbody tr td:nth-child(4)').each($el => {
+    expect($el.text().toLowerCase().trim()).to.eq("read");
   });
 });
 
