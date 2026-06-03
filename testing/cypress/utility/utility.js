@@ -12,13 +12,11 @@ export function loginUser() {
 
 export function deleteAllBooks() {
   cy.request('GET', `${BASE_URL}/api/books`).then(res => {
+    cy.log('Books fetched:', JSON.stringify(res.body));
     const books = res.body.books || [];
+    cy.log(`Found ${books.length} books to delete`);
     books.forEach(book => {
-      cy.request({
-        method: 'DELETE',
-        url: `${BASE_URL}/api/books/${book.bookid}`,
-        credentials: 'include'
-      });
+      cy.request('DELETE', `${BASE_URL}/api/books/${book.bookid}`);
     });
   });
 }
