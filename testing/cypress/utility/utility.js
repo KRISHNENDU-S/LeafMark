@@ -7,14 +7,5 @@ export function loginUser() {
   cy.get(LOCATORS.LOGIN_LOCATORS.passwordInput).type(USER.password);
   cy.get(LOCATORS.LOGIN_LOCATORS.submitButton).click();
   cy.url().should("include", ROUTES.home);
-}
-
-export function deleteAllBooks() {
-  cy.get('body').then($body => {
-    if ($body.find('[data-testid^="delete-btn-"]').length > 0) {
-      cy.get('[data-testid^="delete-btn-"]').first().click();
-      cy.wait(300);
-      deleteAllBooks();
-    }
-  });
+  cy.reload();
 }
