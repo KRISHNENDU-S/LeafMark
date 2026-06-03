@@ -1,7 +1,6 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import * as LOCATORS from "../locators/locators";
 import { loginUser } from "../utility/utility";
-import { deleteAllBooks } from "../utility/utility";
 import { ROUTES } from "../constants/constants";
 
 When("I click edit on book {string}", (bookname) => {
@@ -48,11 +47,6 @@ When("I click delete on book {string}", (bookname) => {
 
 Then("the book should disappear from the table", () => {
   cy.contains('[data-testid^="bookname-"]', "Test Book Two").should("not.exist");
-});
-
-Then("delete all books from the table", () => {
-  deleteAllBooks();
-  cy.get(LOCATORS.TABLE_LOCATORS.noBooks).should("exist");
 });
 
 When("I am on home page", () => {

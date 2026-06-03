@@ -21,6 +21,14 @@ Feature: Edit and Delete Books
     When I click delete on book "Test Book Two"
     Then the book should disappear from the table
 
-  Scenario: Delete all remaining books
-    When I am on home page
-    Then delete all books from the table
+  Scenario: Delete Test Book One
+    When I click delete on book "Test Book One"
+    Then the book should disappear from the table
+
+  Scenario: Delete Test Book Three
+    When I click delete on book "Test Book Three"
+    Then the book should disappear from the table
+
+  Scenario: Delete Test Book Four
+    When I click delete on book "Test Book Four"
+    Then the book should disappear from the table

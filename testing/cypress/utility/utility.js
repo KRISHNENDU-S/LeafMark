@@ -9,14 +9,3 @@ export function loginUser() {
   cy.url().should("include", ROUTES.home);
   cy.reload();
 }
-
-export function deleteAllBooks() {
-  cy.request('GET', `${BASE_URL}/api/books`).then(res => {
-    cy.log('Books fetched:', JSON.stringify(res.body));
-    const books = res.body.books || [];
-    cy.log(`Found ${books.length} books to delete`);
-    books.forEach(book => {
-      cy.request('DELETE', `${BASE_URL}/api/books/${book.bookid}`);
-    });
-  });
-}

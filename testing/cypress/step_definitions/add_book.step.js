@@ -1,7 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import * as LOCATORS from "../locators/locators";
 import { BOOKS, ROUTES } from "../constants/constants";
-import { loginUser, deleteAllBooks } from "../utility/utility";
+import { loginUser } from "../utility/utility";
 
 Given("I am logged in", () => {
   loginUser();
