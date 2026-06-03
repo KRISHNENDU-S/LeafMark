@@ -11,12 +11,14 @@ export function loginUser() {
 }
 
 export function deleteAllBooks() {
-  cy.get('body').then($body => {
-    const count = $body.find('[data-testid^="delete-btn-"]').length;
-    if (count === 0) return;
-    
-    cy.get('[data-testid^="delete-btn-"]').first().click();
-    cy.get('[data-testid^="delete-btn-"]', { timeout: 5000 }).should('have.length.lessThan', count);
-    deleteAllBooks();
+  cy.request('GET', `${BASE_URL}/api/books`).then(res => {
+    const books = res.body.books || [];
+    books.forEach(book => {
+      cy.request({
+        method: 'DELETE',
+        url: `${BASE_URL}/api/books/${book.bookid}`,
+        credentials: 'include'
+      });
+    });
   });
 }
