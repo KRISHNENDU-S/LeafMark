@@ -27,6 +27,7 @@ function Signup() {
 
         <input
           type="text"
+          data-testid="signup-username"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -34,6 +35,7 @@ function Signup() {
         />
         <input
           type="email"
+          data-testid="signup-email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -41,6 +43,7 @@ function Signup() {
         />
         <input
           type="password"
+          data-testid="signup-password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -48,6 +51,7 @@ function Signup() {
         />
 
         <button
+          data-testid="signup-submit"
           onClick={handleSignup}
           className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
         >
