@@ -5,7 +5,7 @@ const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "http://localhost:5173",
+    baseUrl: "https://leaf-mark.vercel.app",
     specPattern: "cypress/e2e/**/*.feature",
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config);
