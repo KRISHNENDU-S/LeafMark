@@ -53,14 +53,15 @@ function Home() {
         <div className="w-1/3 bg-green-50 p-6 border-r border-green-200">
           <h2 className="text-xl font-bold text-green-800 mb-4">Add Book</h2>
           <BookForm onBookAdded={() => getBooks(filters).then(data => {
-  if (data.books) setBooks(data.books)
-})} />
+            if (data.books) setBooks(data.books)
+          })} />
         </div>
 
         <div className="w-2/3 p-6">
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-xl font-bold text-green-800">Book List</h2>
             <input
+              data-testid="search-input"
               type="text"
               placeholder="Search..."
               value={search}
@@ -71,6 +72,7 @@ function Home() {
 
           <div className="flex gap-3 pb-3 mb-4 border-b border-green-200">
             <select
+              data-testid="filter-status"
               value={filters.status}
               onChange={e => setFilters({...filters, status: e.target.value})}
               className="flex-1 border border-green-300 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -82,6 +84,7 @@ function Home() {
             </select>
 
             <select
+              data-testid="filter-genre"
               value={filters.genre}
               onChange={e => setFilters({...filters, genre: e.target.value})}
               className="flex-1 border border-green-300 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -93,6 +96,7 @@ function Home() {
             </select>
 
             <select
+              data-testid="filter-rating"
               value={filters.rating}
               onChange={e => setFilters({...filters, rating: e.target.value})}
               className="flex-1 border border-green-300 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"

@@ -8,11 +8,6 @@ function BookForm({ onBookAdded }) {
   const [genres, setGenres] = useState([''])
   const [step, setStep] = useState(0)
 
-  // step 0 = all disabled
-  // step 1 = bookname + author enabled
-  // step 2 = status enabled
-  // step 3 = genre + rating + submit enabled
-
   function addGenreField() {
     setGenres([...genres, ''])
   }
@@ -31,7 +26,6 @@ function BookForm({ onBookAdded }) {
   function handleBooknameOrAuthorChange(field, value) {
     if (field === 'bookname') setBookname(value)
     if (field === 'author') setAuthor(value)
-
     const bn = field === 'bookname' ? value : bookname
     const au = field === 'author' ? value : author
     if (bn.trim() && au.trim()) setStep(2)
@@ -51,14 +45,12 @@ function BookForm({ onBookAdded }) {
       rating,
       genres: genres.filter(g => g.trim() !== '')
     }
-
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/books`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify(payload)
     })
-
     const data = await response.json()
     if (data.book) {
       onBookAdded(data.book)
@@ -77,6 +69,7 @@ function BookForm({ onBookAdded }) {
     <div>
       {step === 0 && (
         <button
+          data-testid="add-book-btn"
           onClick={() => setStep(1)}
           className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 mb-4"
         >
@@ -85,6 +78,7 @@ function BookForm({ onBookAdded }) {
       )}
 
       <input
+        data-testid="book-name"
         type="text"
         placeholder="Book name *"
         value={bookname}
@@ -94,6 +88,7 @@ function BookForm({ onBookAdded }) {
       />
 
       <input
+        data-testid="book-author"
         type="text"
         placeholder="Author *"
         value={author}
@@ -107,6 +102,7 @@ function BookForm({ onBookAdded }) {
         {['read', 'to read', 'reading'].map(s => (
           <label key={s} className="flex items-center gap-2 mb-1 text-green-700 capitalize">
             <input
+              data-testid={`status-${s.replace(' ', '-')}`}
               type="radio"
               name="status"
               value={s}
@@ -125,6 +121,7 @@ function BookForm({ onBookAdded }) {
           <div key={i} className="flex items-center gap-2 mb-2">
             <button disabled={step < 3} onClick={addGenreField} className="text-green-600 font-bold text-xl">+</button>
             <input
+              data-testid={`genre-input-${i}`}
               type="text"
               value={g}
               disabled={step < 3}
@@ -143,6 +140,7 @@ function BookForm({ onBookAdded }) {
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map(n => (
             <button
+              data-testid={`rating-${n}`}
               key={n}
               disabled={step < 3}
               onClick={() => setRating(rating === n ? null : n)}
@@ -154,31 +152,31 @@ function BookForm({ onBookAdded }) {
         </div>
       </div>
 
- {step > 0 && (
-  <>
-    <button
-      disabled={step < 3}
-      onClick={handleSubmit}
-      className={`w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 ${step < 3 ? disabled : ''}`}
-    >
-      Add Book
-    </button>
-
-    <button
-      onClick={() => {
-        setBookname('')
-        setAuthor('')
-        setStatus('')
-        setRating(null)
-        setGenres([''])
-        setStep(0)
-      }}
-className="w-full mt-2 border-2 border-green-700 text-green-800 font-medium py-2 rounded-lg hover:bg-green-100"
-    >
-      Cancel
-    </button>
-  </>
-)}
+      {step > 0 && (
+        <>
+          <button
+            data-testid="submit-book"
+            disabled={step < 3}
+            onClick={handleSubmit}
+            className={`w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 ${step < 3 ? disabled : ''}`}
+          >
+            Add Book
+          </button>
+          <button
+            onClick={() => {
+              setBookname('')
+              setAuthor('')
+              setStatus('')
+              setRating(null)
+              setGenres([''])
+              setStep(0)
+            }}
+            className="w-full mt-2 border-2 border-green-700 text-green-800 font-medium py-2 rounded-lg hover:bg-green-100"
+          >
+            Cancel
+          </button>
+        </>
+      )}
     </div>
   )
 }
