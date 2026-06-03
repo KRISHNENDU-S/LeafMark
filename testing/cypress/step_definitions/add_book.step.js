@@ -1,10 +1,13 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import * as LOCATORS from "../locators/locators";
 import { BOOKS, ROUTES } from "../constants/constants";
-import { loginUser } from "../utility/utility";
-
+import { loginUser, deleteAllBooks } from "../utility/utility";
 Given("I am logged in", () => {
   loginUser();
+});
+
+And("all books are cleared", () => {
+  deleteAllBooks();
 });
 
 When("I click add book", () => {
