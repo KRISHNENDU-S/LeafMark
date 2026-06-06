@@ -138,21 +138,29 @@ function BookForm({ onBookAdded }) {
         ))}
       </div>
 
-      <div className={`mb-4 ${step < 3 ? disabled : ''}`}>
-        <p className="text-green-800 font-medium mb-1">Rating</p>
-        <div className="flex gap-2">
-          {[1, 2, 3, 4, 5].map(n => (
-            <button
-              key={n}
-              disabled={step < 3}
-              onClick={() => setRating(rating === n ? null : n)}
-              className={`w-9 h-9 rounded border font-semibold ${rating === n ? 'bg-green-600 text-white border-green-600' : 'border-green-300 text-green-700'}`}
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      </div>
+<div className={`mb-4 ${step < 3 ? disabled : ''}`}>
+  <p className="text-green-800 font-medium mb-1">Rating</p>
+  <input
+    type="number"
+    min="1"
+    max="5"
+    step="0.1"
+    value={rating ?? ''}
+    disabled={step < 3}
+    onChange={e => setRating(e.target.value ? parseFloat(e.target.value) : null)}
+    onBlur={() => {
+      if (rating !== null) {
+        if (rating < 1) setRating(1)
+        if (rating > 5) setRating(5)
+      }
+    }}
+    placeholder="1 - 5"
+    className="w-full border border-green-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+  />
+  {rating !== null && (rating < 1 || rating > 5) && (
+    <p className="text-red-500 text-sm mt-1">Rating must be between 1 and 5</p>
+  )}
+</div>
 
  {step > 0 && (
   <>

@@ -42,6 +42,7 @@ function BookTable({ books, onDelete, onUpdate }) {
   }
 
   return (
+    <div className="overflow-x-auto">
     <table className="w-full border-collapse">
       <thead>
         <tr className="bg-green-100 text-green-800">
@@ -113,6 +114,7 @@ function BookTable({ books, onDelete, onUpdate }) {
         ))}
       </tbody>
     </table>
+</div>
   )
 }
 

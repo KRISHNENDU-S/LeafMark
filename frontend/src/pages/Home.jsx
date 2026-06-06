@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { getMe } from '../api/auth'
+import { getMe, logout } from '../api/auth'
 import BookForm from '../components/BookForm'
 import BookTable from '../components/BookTable'
 import { getBooks, deleteBook, updateBook } from '../api/books'
+
 
 function Home() {
   const [username, setUsername] = useState('')
@@ -15,6 +16,11 @@ function Home() {
       if (data.user) setUsername(data.user.username)
     })
   }, [])
+
+async function handleLogout() {
+  await logout()
+  window.location.href = '/'
+}
 
   useEffect(() => {
     getBooks(filters).then(data => {
@@ -45,19 +51,25 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <div className="w-full bg-green-700 text-white px-6 py-3 flex items-center">
-        <span className="font-semibold text-lg">Welcome to LeafMark, {username}!!!</span>
-      </div>
+     <div className="w-full bg-green-700 text-white px-6 py-3 flex items-center justify-between">
+  <span className="font-semibold text-lg">Welcome to LeafMark, {username}!!!</span>
+  <button
+    onClick={handleLogout}
+    className="bg-white text-green-700 px-4 py-1 rounded-lg text-sm font-semibold hover:bg-green-100"
+  >
+    Logout
+  </button>
+</div>
 
-      <div className="flex flex-1">
-        <div className="w-1/3 bg-green-50 p-6 border-r border-green-200">
+<div className="flex flex-1 flex-col md:flex-row">
+  <div className="w-full md:w-1/3 bg-green-50 p-6 border-r border-green-200">
           <h2 className="text-xl font-bold text-green-800 mb-4">Add Book</h2>
           <BookForm onBookAdded={() => getBooks(filters).then(data => {
   if (data.books) setBooks(data.books)
 })} />
         </div>
 
-        <div className="w-2/3 p-6">
+      <div className="w-full md:w-2/3 p-6">  
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-xl font-bold text-green-800">Book List</h2>
             <input
