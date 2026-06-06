@@ -63,7 +63,7 @@ Then("only books with rating 4 should show", () => {
   }).each($el => {
     const text = $el.text();
     if (text !== '—') {
-      expect(text).to.eq("4");
+      expect(text).to.eq("4.0");
     }
   });
 });
