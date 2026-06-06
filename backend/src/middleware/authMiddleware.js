@@ -30,6 +30,29 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ message: 'Session expired, please login again' });
       }
 
+      const newRefreshToken = jwt.sign(
+        { userid: decoded.userid },
+        process.env.JWT_SECRET,
+        { expiresIn: '90d' }
+      );
+
+      await pool.query(
+        'DELETE FROM refresh_tokens WHERE userid = $1 AND token = $2',
+        [decoded.userid, refreshToken]
+      );
+
+      await pool.query(
+        'INSERT INTO refresh_tokens (userid, token) VALUES ($1, $2)',
+        [decoded.userid, newRefreshToken]
+      );
+
+      res.cookie('refreshToken', newRefreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 90 * 24 * 60 * 60 * 1000,
+      });
+
       const newAccessToken = jwt.sign(
         { userid: decoded.userid },
         process.env.JWT_SECRET,

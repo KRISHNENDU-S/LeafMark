@@ -26,3 +26,11 @@ export async function getMe() {
   })
   return response.json()
 }
+
+export async function logout() {
+  const response = await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    credentials: 'include'
+  })
+  return response.json()
+}

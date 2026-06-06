@@ -11,6 +11,18 @@ const addBook = async (req, res) => {
     const { bookname, author, status, rating, genres } = parsed.data;
     const userid = req.user.userid;
 
+     const duplicate = await pool.query(
+      `SELECT bookid FROM books 
+       WHERE userid = $1 
+       AND LOWER(bookname) = LOWER($2) 
+       AND LOWER(author) = LOWER($3)`,
+      [userid, bookname, author]
+    );
+
+    if (duplicate.rows.length > 0) {
+      return res.status(409).json({ message: 'Book already exists in your library' });
+    }
+    
     const bookResult = await pool.query(
       'INSERT INTO books (bookname, author, status, rating, userid) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [bookname, author, status, rating || null, userid]

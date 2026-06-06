@@ -58,13 +58,13 @@ const login = async (req, res) => {
     if (!valid) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
-
+console.log('logging in user:', user.userid, user.email);
     const accessToken = jwt.sign(
       { userid: user.userid, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
-
+console.log('logging in user:', user.userid, user.email);
     const refreshToken = jwt.sign(
       { userid: user.userid },
       process.env.JWT_SECRET,
@@ -119,4 +119,19 @@ const me = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, me };
+const logout = async (req, res) => {
+  try {
+    await pool.query('DELETE FROM refresh_tokens WHERE userid = $1', [req.user.id]);
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'Logout failed' });
+  }
+};
+
+module.exports = { signup, login, me, logout };
