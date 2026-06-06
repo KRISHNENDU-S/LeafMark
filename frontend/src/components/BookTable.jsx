@@ -113,7 +113,6 @@ function BookTable({ books, onDelete, onUpdate }) {
         ))}
       </tbody>
     </table>
-</div>
   )
 }
 
