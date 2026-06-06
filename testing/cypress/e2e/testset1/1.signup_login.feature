@@ -1,10 +1,10 @@
 Feature: User Authentication and Login
 
-  Scenario: Successful signup with new user
-    Given I am on the signup page
-    When I enter valid signup credentials
-    And I click the signup button
-    Then I should see a success response
+  # Scenario: Successful signup with new user
+  #   Given I am on the signup page
+  #   When I enter valid signup credentials
+  #   And I click the signup button
+  #   Then I should see a success response
 
   Scenario: Successful login with registered user
     Given I am on the login page

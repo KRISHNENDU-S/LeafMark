@@ -1,5 +1,4 @@
-export const BASE_URL = "https://leaf-mark.vercel.app";
-// export const BASE_URL = "http://localhost:5173";
+export const BASE_URL = Cypress.config('baseUrl');
 
 export const USER = {
   username: "testuser",
@@ -12,3 +11,10 @@ export const ROUTES = {
   login: "/",
   home: "/home"
 };
+
+export const BOOKS = {
+  basic_reading: { bookname: "Test Book One", author: "Author One", status: "reading" },
+  basic_to_read: { bookname: "Test Book Two", author: "Author Two", status: "to-read" },
+  with_genre: { bookname: "Test Book Three", author: "Author Three", status: "reading", genre: "Fiction" },
+  full: { bookname: "Test Book Four", author: "Author Four", status: "read", genre: "Fantasy", rating: 4 }
+}
